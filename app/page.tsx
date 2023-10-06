@@ -7,7 +7,6 @@ import { useEffect } from 'react'
 export default function Home() {
   const loggedInUser = useAppSelector((state) => state.authReducer.loggedInUser)
   useEffect(() => {
-    console.log('login throgh store -working')
   }, [loggedInUser])
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

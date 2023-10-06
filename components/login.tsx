@@ -9,7 +9,6 @@ export default function Login() {
     const [credentials, handleInputChange] = useForm({ email: '', password: '' })
     const [logInAction, logOutAction] = useAuthActions()
     const onLogin = (ev: React.FormEvent) => {
-        console.log('login after dispatch')
         ev.preventDefault()
         try {
             logInAction(credentials as unknown as Credentials)
