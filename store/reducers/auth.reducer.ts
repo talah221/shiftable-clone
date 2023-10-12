@@ -1,13 +1,15 @@
 'use client'
 
+import { userService } from "@/services/user.service"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-
+// const isLogin = await userService.isLoggedIn()
+// console.log(isLogin)
 const initialState = {
     loggedInUser: {
         name: '',
         isAdmin: false
-    } as LoggedInUser
+    } as unknown as LoggedInUser
 } as InitialState
 
 export const auth = createSlice({

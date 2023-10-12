@@ -10,10 +10,11 @@ export const useAuthActions = () => {
 
     const logInAction = (credentials: Credentials) => {
         const { name, isAdmin } = userService.login(credentials)
-        return dispatch(login({ name, isAdmin }))
+        dispatch(login({ name, isAdmin }))
     }
 
     const logOutAction = () => {
+        userService.logout()
         dispatch(logOut())
         return true
     }
