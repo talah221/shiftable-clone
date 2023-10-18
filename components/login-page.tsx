@@ -1,17 +1,17 @@
 'use client'
 
-import { useForm } from '@/hooks/useForm'
-import { useAuthActions } from '@/store/actions/auth.actions'
+import { useLogin } from '@/hooks/useAuth.hook'
+import { useForm } from '@/hooks/useForm.hook'
+// import { useAuthActions } from '@/store/actions/auth.actions'
 
 
-export default function Login() {
+export default function LoginPage() {
 
     const [credentials, handleInputChange] = useForm({ email: '', password: '' })
-    const [logInAction, logOutAction] = useAuthActions()
     const onLogin = (ev: React.FormEvent) => {
         ev.preventDefault()
         try {
-            logInAction(credentials as unknown as Credentials)
+            useLogin(credentials as unknown as Credentials)
         } catch (error) {
 
         }
