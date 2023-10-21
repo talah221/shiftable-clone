@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { revalidateTag } from 'next/cache'
+import { getAuth } from 'firebase/auth'
+import { createUserWithEmailAndPassword } from 'firebase/auth/cordova'
 
 // e.g a webhook to `your-website.com/api/revalidate?tag=collection&secret=<token>`
 export async function GET() {
@@ -11,11 +13,13 @@ export async function GET() {
     //   todo: Coennect firebase in here
 }
 
-export async function POST(request: Request) {
-    console.log('in Back--->', request)
+export async function POST(request: NextRequest) {
+    const data = await request.json()
+    // const auth = getAuth()
+    // createUserWithEmailAndPassword(auth, request.body)
     // const secret = request.nextUrl.searchParams.get('secret')
     // const tag = request.nextUrl.searchParams.get('tag')
 
-    return NextResponse.json(true)
+    return NextResponse.json(data)
     //   todo: Coennect firebase in here
 }

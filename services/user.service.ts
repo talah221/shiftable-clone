@@ -2,14 +2,11 @@
 
 import { queryClient } from "@/components/TanstackProvider"
 import { fetchService } from "./fetch.service"
-import { useQueryClient } from "react-query"
 
 
 const login = async (credentials: Credentials): Promise<LoggedInUser> => {
-    const user: LoggedInUser = { name: 'aa', isAdmin: true }
-    const loggedInUser = await fetchService.POST('auth', credentials)
-    queryClient.setQueryData('loggedInUser', loggedInUser)
-    // console.log('ao')
+    const user = await fetchService.POST('auth', credentials)
+    await queryClient.setQueryData('loggedInUser', user);
     return user
 }
 
@@ -17,17 +14,22 @@ const logout = () => {
     return { name: '', isAdmin: false }
 }
 
-const isLoggedIn = async (): Promise<boolean> => {
+const isLoggedIn = (): boolean => {
     const loggedInUser = queryClient.getQueryData('loggedInUser')
+    console.log('checking login', loggedInUser)
     if (loggedInUser) return true
     else return false
 
 }
 
+const getEmptyUser = (): LoggedInUser => {
+    return { name: '', isAdmin: false }
+}
 
 
 export const userService = {
     login,
     logout,
-    isLoggedIn
+    isLoggedIn,
+    getEmptyUser
 }

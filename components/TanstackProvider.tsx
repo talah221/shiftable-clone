@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { QueryClient, QueryClientProvider, useQueryClient } from "react-query";
 
 
@@ -15,7 +15,6 @@ export let queryClient = new QueryClient({
 
 export const TanstackProvider = ({ children }: { children: React.ReactNode }) => {
     const [queryClientAttribute] = useState(queryClient)
-
     return (
         <QueryClientProvider client={queryClientAttribute}>
             {children}
