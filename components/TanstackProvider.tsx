@@ -15,7 +15,6 @@ export let queryClient = new QueryClient({
     }
 });
 
-//s
 export const TanstackProvider = ({ children }: { children: React.ReactNode }) => {
     const [queryClientAttribute] = useState(queryClient)
     return (
