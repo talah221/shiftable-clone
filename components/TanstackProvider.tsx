@@ -8,10 +8,12 @@ export let queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             cacheTime: 900000 // 15 minutes
+            // better to use consts for that.
+            // const minute = 1000*6
+            // cacheTime = minute * 15
         }
     }
 });
-
 
 export const TanstackProvider = ({ children }: { children: React.ReactNode }) => {
     const [queryClientAttribute] = useState(queryClient)

@@ -8,13 +8,14 @@ import { useQueryClient } from 'react-query';
 
 
 export default function LoginPage() {
-
-    const [credentials, handleInputChange] = useForm({ email: '', password: '' })
+    // better not to use default imports
+    // export function LoginPage
+    const [credentials, handleInputChange] = useForm<Credentials>({ email: '', password: '' })
     const loginHook = useLogin();
     const onLogin = async (ev: React.FormEvent) => {
         ev.preventDefault()
         try {
-            await loginHook.mutateAsync(credentials as unknown as Credentials)
+            await loginHook.mutateAsync(credentials as unknown as Credentials) // as unknown as credentials?
         } catch (error) {
 
         }
