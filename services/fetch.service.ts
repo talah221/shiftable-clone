@@ -19,7 +19,7 @@ export const fetchService = {
     GET(endpoint: string, data: string | object) {
         return api(endpoint, 'GET', data)
     },
-    POST(endpoint: string, data: string | object) {
+    POST<T>(endpoint: string, data: string | object):Promise<T> {
         return api(endpoint, 'POST', data)
     },
     PUT(endpoint: string, data: string | object) {
@@ -39,7 +39,7 @@ const api = async (endpoint: string, method: string = 'GET', data: string | obje
             params: (method === 'GET') ? data : null
         })
         // return res
-        return DetermineReturnType(endpoint, method, res)
+        return res.data
         // אני רוצה באמצעות הפונקציה הזו לבדוק ולוודא האם הערך החוזר מהסרבר הוא הנכון לפונקציה שקוראת לו
     } catch (error: any) {
         console.log(`Had Issues ${method}ing to the backend, endpoint: ${endpoint}, with data: `, data)

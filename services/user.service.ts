@@ -7,7 +7,7 @@ import { fetchService } from "./fetch.service"
 const login = async (credentials: Credentials): Promise<LoggedInUser> => {
     try {
         // עכשיו כן, אני יכול בעצם לבנות פונקציה שבודקת את הערך שחוזר אם הוא מתאים, ולשים אותו בכל סרוויס בהתאם אבל האם אין דרך לעשות את זה מהסרוויס של הקריאה לסרבר?
-        const user = await fetchService.POST('auth', credentials)
+        const user = await fetchService.POST<LoggedInUser>('auth', credentials)
         queryClient.setQueryData('loggedInUser', user);
         return user
     } catch (error) {
