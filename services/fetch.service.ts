@@ -1,6 +1,7 @@
 'use client'
 
 import Axios from "axios"
+import { KeyObjectType } from "crypto"
 import Error from "next/error"
 
 const BASE_URL = process.env.NODE_ENV === 'development'
@@ -12,6 +13,7 @@ let axios = Axios.create({
     withCredentials: true
 })
 
+// TODO: Bulid a fucntion that determines the return value type 
 
 export const fetchService = {
     GET(endpoint: string, data: string | object) {
@@ -28,7 +30,7 @@ export const fetchService = {
     }
 }
 
-const api = async (endpoint: string, method: string = 'GET', data: string | object): Promise<any> => {
+const api = async (endpoint: string, method: string = 'GET', data: string | object) => {
     try {
         const res = await axios({
             url: `${BASE_URL}${endpoint}`,
@@ -36,7 +38,9 @@ const api = async (endpoint: string, method: string = 'GET', data: string | obje
             data: data,
             params: (method === 'GET') ? data : null
         })
-        return res
+        // return res
+        return DetermineReturnType(endpoint, method, res)
+        // אני רוצה באמצעות הפונקציה הזו לבדוק ולוודא האם הערך החוזר מהסרבר הוא הנכון לפונקציה שקוראת לו
     } catch (error: any) {
         console.log(`Had Issues ${method}ing to the backend, endpoint: ${endpoint}, with data: `, data)
         console.dir(error)
@@ -49,3 +53,20 @@ const api = async (endpoint: string, method: string = 'GET', data: string | obje
 }
 
 
+const DetermineReturnType = (endpoint: string, method: string, res: any) => {
+    // הבעיה פה היא שהיוזר סרוויס (שקורא לפונקציה) אומר שהוא לא יכול לוודא שבאמת יחזור פרומיס של לוגגד אין יוזר
+    if (endpoint === 'user' && method === 'GET') {
+        return res as Promise<LoggedInUser>
+    }
+    if (endpoint === 'auth' && method === 'aa') {
+        return res as Promise<string>
+    }
+
+    return Promise.reject('At Fetch service - invalid response type. The server doesnt returning the right value/value type')
+}
+
+// const CheckReturnType = (className: , res: any) => {
+//     return className
+// }
+
+// CheckReturnType(new ReturnTypeDeterminer<T>, { name: 'ds', isAdming: 'sds' }) 

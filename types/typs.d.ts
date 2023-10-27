@@ -15,3 +15,15 @@ type LoggedInUser = {
     isAdmin: boolean
 }
 
+
+
+class ReturnTypeDeterminer<T> {
+    private result: T | undefined
+
+
+    constructor(result: T) {
+        this.result = result
+    }
+}
+
+

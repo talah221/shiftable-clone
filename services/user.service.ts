@@ -5,20 +5,32 @@ import { fetchService } from "./fetch.service"
 
 
 const login = async (credentials: Credentials): Promise<LoggedInUser> => {
-    const user = await fetchService.POST('auth', credentials)
-    await queryClient.setQueryData('loggedInUser', user);
-    return user
+    try {
+        // עכשיו כן, אני יכול בעצם לבנות פונקציה שבודקת את הערך שחוזר אם הוא מתאים, ולשים אותו בכל סרוויס בהתאם אבל האם אין דרך לעשות את זה מהסרוויס של הקריאה לסרבר?
+        const user = await fetchService.POST('auth', credentials)
+        queryClient.setQueryData('loggedInUser', user);
+        return user
+    } catch (error) {
+        throw new Error('unable to login - user service')
+    }
+
 }
 
 const logout = () => {
     return { name: '', isAdmin: false }
 }
 
-const isLoggedIn = (): boolean => {
-    const loggedInUser = queryClient.getQueryData('loggedInUser')
-    console.log('checking login', loggedInUser)
-    if (loggedInUser) return true
-    else return false
+const isLoggedIn = async (): Promise<boolean> => {
+    try {
+        let loggedInUser = await queryClient.getQueryData('loggedInUser')
+        if (!loggedInUser) loggedInUser = await fetchService.GET('user', '')
+        await queryClient.setQueryData('loggedInUser', loggedInUser);
+        if (loggedInUser) return true
+        else return false
+    } catch (error) {
+        throw new Error('unable to get user from server')
+    }
+
 
 }
 

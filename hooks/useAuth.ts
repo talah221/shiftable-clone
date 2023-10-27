@@ -4,9 +4,7 @@ import { userService } from "@/services/user.service"
 import { useMutation, useQuery } from "react-query"
 
 
-const useIsLoggedIn = (): boolean => {
-    return userService.isLoggedIn()
-}
+// TODO: make this file a react-query Service 
 
 const useLogin = () => {
     return useMutation({
@@ -14,10 +12,12 @@ const useLogin = () => {
     })
 
 }
-
-export {
-    useIsLoggedIn,
-    useLogin
+const useLogout = () => {
+    return userService.logout()
 }
 
-// const useLogout
+export {
+    useLogin,
+    useLogout
+}
+
